@@ -1,0 +1,69 @@
+
+# Script to create a project, something that 'cargo new' does in case of rust projects
+
+#!/bin/bash
+
+# Function to display general help message
+display_help() {
+    echo "Usage: $0 [OPTIONS]"
+    echo "Options:"
+    echo "  -h, --help   Display this help message"
+    echo "  project      Perform operations related to projects"
+}
+
+# Function to display project help message
+display_project_help() {
+    echo "Usage: $0 project [OPTIONS]"
+    echo "Options:"
+    echo "  create <project_name>   Create a new project directory"
+    echo "  remove <project_name>   Remove an existing project directory"
+    echo "  -h, --help              Display help message for project"
+}
+
+# Function to create a project directory
+create_project() {
+    project_name="$1"
+    mkdir "$project_name"
+    cp -r misc/* "$project_name"/
+    echo "Project '$project_name' created successfully."
+}
+
+# Function to remove a project directory
+remove_project() {
+    project_name="$1"
+    if [ -d "$project_name" ]; then
+        rm -r "$project_name"
+        echo "Project '$project_name' removed successfully."
+    else
+        echo "Project '$project_name' does not exist."
+    fi
+}
+
+# Parse command line options
+case $1 in
+    -h|--help)
+        display_help
+        ;;
+    project)
+        case $2 in
+            create)
+                create_project "$3"
+                ;;
+            remove)
+                remove_project "$3"
+                ;;
+            -h|--help)
+                display_project_help
+                ;;
+            *)
+                echo "Invalid subcommand: $2"
+                display_project_help
+                ;;
+        esac
+        ;;
+    *)
+        echo "Invalid command: $1"
+        display_help
+        ;;
+esac
+
