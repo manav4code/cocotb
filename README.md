@@ -22,3 +22,7 @@ The script can be used with the following commands:
 ```bash
 ./helper project remove <project-name>
 ```
+---
+
+#### Note:
+*misc* folder contains the dummy directory structure that will be copied to new project folder as an created.
